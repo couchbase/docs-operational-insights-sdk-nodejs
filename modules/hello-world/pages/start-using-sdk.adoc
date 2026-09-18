@@ -1,0 +1,109 @@
+= {name-sdk} Quickstart Guide
+:page-toclevels: 3
+:description: Install, connect, try. A quick start guide to get you up and running with Operational Insights Analytics and the {name-sdk}.
+
+[abstract]
+{description}
+
+
+include::analytics-sdk:shared:partial$start-using-sdk.adoc[tag=intro]
+
+
+== Before You Start
+
+Install and configure an xref:enterprise-analytics:intro:intro.adoc[Operational Insights Enterprise Cluster].
+
+////
+Sign up for a xref:cloud:get-started:create-account.adoc[Capella account],
+and choose a xref:columnar:intro:intro.adoc[Columnar] cluster.
+
+You'll need to add your IP address to the allowlist, during the sign-up and cluster creation process (this can also be done at any time, via the UI, should the address change, or if you need to add a new one).
+////
+
+
+=== Prerequisites
+
+The {name-sdk} supports LTS versions of Node.js --
+these are 26, 24, and 22 at the time of the 1.0.0 release (October 2026).
+See the xref:project-docs:compatibility.adoc#platform-compatibility[compatibility page] for more information about platform support.
+
+////
+We recommend using the most recent long-term support (LTS) version of Node.js -- 
+at the time of writing (August 2025) this is version 24.
+////
+
+== Getting the SDK
+
+The SDK can be installed via `npm`:
+
+[source,console]
+----
+npm install couchbase-analytics
+----
+
+For other installation methods, see the xref:project-docs:sdk-full-installation.adoc[installation page].
+
+
+[quickstart]
+== Connecting and Executing a Query
+
+
+The 2.2 Operational Insights Enterprise Cluster introduced support for JWT and client certificate authentication, as well as a new poll-based {async-server-api-feature-name} that uses request handles to fetch results.
+This API eliminates the need for long-running server connections.
+
+The examples in this first section of the page are for the standard API, working with all releases of Operational Insights (with {async-server-api-feature-name} examples following in the <<#server-asynchronous-api,Server Async section>>).
+Note, you can still use this API with 2.2+ releases of Operational Insights, in addition to the new API.
+
+
+=== Server Synchronous Request API
+
+==== CommonJS
+
+[source,javascript]
+----
+include::devguide:example$node/src/startusing_commonjs.js[indent=0,tag=commonjs]
+----
+
+==== ES Modules
+
+[source,javascript]
+----
+include::devguide:example$node/src/startusing_esmodules.js[indent=0,tag=esmodules]
+----
+
+
+
+[[#server-asynchronous-api]]
+=== {async-server-api-feature-name}
+
+Operational Insights 2.2 introduced a {async-server-api-feature-name}.
+The SDK sends a request, polls for results, and then fetches once the result is available.
+
+==== CommonJS
+
+.Server Asynchronous API Example
+[source,javascript]
+----
+include::devguide:example$node/src/server_async.js[indent=0,tag=server-async]
+----
+
+==== ES Modules
+
+[source,typescript]
+----
+include::devguide:example$node/src/server_async.ts[indent=0,tag=server-async]
+----
+
+
+
+=== Connection String
+
+The `clusterConnStr` in the above example should takes the form of "https://<your_hostname>:" + PORT.
+include::{version-common}@analytics-sdk:shared:partial$connstr.adoc[tag=connstr]
+
+
+
+
+== Migration from Row-Based Analytics
+
+include::{version-common}@operational-insights-sdk:shared:partial$migration.adoc[tag=migration]

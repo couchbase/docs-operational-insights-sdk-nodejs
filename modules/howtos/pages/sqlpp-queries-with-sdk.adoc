@@ -1,0 +1,149 @@
+= Querying with {sqlpp}
+:page-toclevels: 2
+:example-source: devguide:example$node/src/sqlpp.js
+:description: You can query for documents in Couchbase using the {sqlpp} query language -- a language based on SQL, but designed for structured and flexible JSON documents.
+
+
+[abstract]
+{description}
+
+
+
+On this page we dive straight into using the Query Service API from the {name-sdk}.
+For a deeper look at the concepts, to help you better understand the Query Service, and the {sqlpp} language, see the links in the <<further-information,Further Information>> section at the end of this page.
+
+
+
+
+// Here we show queries against the Travel Sample collection, at cluster and scope level,
+// and give links to information on adding other collections to your data.
+// kafka
+// postgres
+// capella
+
+
+== Before You Start
+
+This page assumes that you have xref:hello-world:start-using-sdk.adoc[installed the {name-sdk}], added your IP address to the allowlist, and xref:analytics:manage:manage-nodes/create-cluster.adoc#cluster[created an Operational Insights Enterprise cluster].
+
+Create a collection to work upon by xref:analytics:intro:connecting-to-data-sources.adoc#import-the-travel-sample-collections[importing the travel-sample dataset] into your cluster.
+
+
+== Querying Your Dataset
+
+
+[TIP]
+.API Enhancements & Async
+====
+The {name-sdk} supports JWT and client certificate authentication, as well as a new "async" poll-based API that uses request handles to fetch results, introduced in the 2.2 release of Operational Insights Enterprise Server, and eliminating the need for long-running server connections.
+
+The examples in this section are for the standard API, working with all 2.x releases of Operational Insights (with Server Async examples following in the <<#server-asynchronous-api,Server Async section>>).
+Note, you will still be able to use this API with more recent releases of Operational Insights, in addition to the new API.
+====
+
+
+
+Most queries return more than one result, and you want to iterate over the results:
+
+.Scope Level
+[source,javascript]
+----
+include::{example-source}[indent=0,tag=sqlpp_scope_query]
+----
+
+.Cluster Level
+[source,javascript]
+----
+include::{example-source}[indent=0,tag=sqlpp_cluster_query]
+----
+
+
+=== Positional and Named Parameters
+
+Supplying parameters as individual arguments to the query allows the query engine to optimize the parsing and planning of the query. You can either supply these parameters by name or by position.
+
+Execute an async query with positional arguments:
+
+.Positional Parameters
+[source,javascript]
+----
+include::{example-source}[indent=0,tag=sqlpp_positional_parameters_query]
+----
+
+Execute an async query with named arguments:
+
+.Named Parameters
+[source,javascript]
+----
+include::{example-source}[indent=0,tag=sqlpp_named_parameters_query]
+----
+
+
+
+[[#server-asynchronous-api]]
+== {async-server-api-feature-name}
+
+In the 2.2 release, the Operational Insights Server added an asynchronous request API.
+The SDK will send a request, poll for results, and then fetch once the result is available.
+
+
+=== CommonJS
+
+.Server Asynchronous API Example
+[source,javascript]
+----
+include::devguide:example$node/src/server_async.js[indent=0,tag=server-async]
+----
+
+=== ES Modules
+
+[source,typescript]
+----
+include::devguide:example$node/src/server_async.ts[indent=0,tag=server-async]
+----
+
+
+
+== Query Options
+
+The Query Service provides an array of options to customize your query.
+The following table lists them all:
+
+.Available Query Options
+[options="header"]
+|====
+| Name       | Description
+| `abortSignal?: AbortSignal` | Sets an abort signal for the query allowing the operation to be cancelled.
+| `clientContextId?: string` | The returned client context id for this query.
+| `deserializer?: Deserializer` | Sets the deserializer used by `QueryResult.rows` to convert query result rows into objects. If not specified, defaults to the cluster's default deserializer.
+a| 
+[source,javascript]
+----
+namedParameters?: {
+    [key: string]: any;
+}
+----
+| Named values to be used for the placeholders within the query.
+| `positionalParameters?: any[]` | Positional values to be used for the placeholders within the query.
+a| 
+[source,javascript]
+----
+raw?: {
+    [key: string]: any;
+}
+----
+| Specifies any additional parameters which should be passed to the query engine when executing the query.
+| `readOnly?: boolean` | Indicates whether this query should be executed in read-only mode.
+| `scanConsistency?: QueryScanConsistency` | Specifies the consistency requirements when executing the query.
+| `timeout?: number` | The timeout for this operation, represented in milliseconds.
+|====
+
+
+
+
+== Further Information
+
+The xref:analytics:sqlpp:1_intro.adoc[{sqlpp} for Analytics Reference]]
+offers a complete guide to the {sqlpp} language for both of our analytics services, including all of the latest additions.
+
+

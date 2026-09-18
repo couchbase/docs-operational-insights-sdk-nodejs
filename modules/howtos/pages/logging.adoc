@@ -1,0 +1,36 @@
+= Logging
+:description: Logging with the {name-sdk}.
+
+[abstract]
+{description}
+
+
+Customized logging is not yet implemented.
+Use of the console logger (detailed below) is currently recommended.
+
+== Logging via Environmental Settings
+
+In the command line environment, the `CBPPLOGLEVEL` variable is set as follows:
+
+.GNU/Linux and Mac
+[source,console]
+----
+export CBPPLOGLEVEL=<log-level>
+----
+
+.Windows
+[source,console]
+----
+set CBPPLOGLEVEL=<log-level>
+----
+
+== Log Levels
+
+You can increase the log level for greater verbosity (more information) in the logs:
+
+* off -- disables all logging, which is normally set by default.
+* error -- error messages.
+* warn -- error notifications.
+* info -- useful notices, not often.
+* debug -- diagnostic information, required to investigate problems.
+* trace -- the most verbose level.

@@ -1,0 +1,179 @@
+= Managing Connections
+:description: This section describes how to connect the {name-sdk} to an Operational Insights cluster.
+:page-toclevels: 2
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at wwww.
+
+
+[abstract]
+{description}
+It contains best practices as well as information on TLS/SSL and advanced connection options.
+
+
+Our xref:hello-world:start-using-sdk.adoc[Getting Started pages] cover the basics of making a connection to an Operational Insights cluster.
+This page is a wider look at the topic.
+
+
+== Connecting to a Cluster
+
+A connection to an Insights cluster is represented by an `analytics` object.
+// A `Cluster` provides access to databases, scopes, and collections, as well as various Analytics services and management interfaces.
+Connect to Operational Insights by calling `analytics.createInstance` with the connection string, credentials, and any required optional parameters.
+
+[source,javascript]
+----
+const analytics = require('couchbase-analytics')
+
+async function main() {
+    // Update this to your cluster
+    const clusterConnStr = 'https://<your_hostname>:<PORT>'
+    const username = 'username'
+    const password = 'Password123!'
+    // User Input ends here.
+
+    const credential = new analytics.Credential(username, password)
+    const cluster = analytics.createInstance(clusterConnStr, credential)
+
+----
+
+////
+NOTE: Capella's root certificate is *not* signed by a well known Certificate Authority.
+However, the certificate is bundled with the SDK, and is automatically trusted unless you specify a different certificate to trust.
+////
+
+
+== Connection Strings
+
+
+include::{version-common}@operational-insights-sdk:shared:partial$connstr.adoc[tag=more-connstr]
+
+
+
+
+== Authentication by Credential
+
+Similarly to the `Authenticator` abstraction in Couchbase Operational SDKs, Insights SDKs use a `Credential` abstraction covering regular password authentication (Basic Access Authentication), JSON Web Tokens (JWT), and Client Certificates through mTLS.
+
+Basic Access Authentication is shown in the example <<#connecting-to-a-cluster,above>>.
+
+
+=== JSON Web Tokens (JWT)
+
+JWT is supported with Operational Insights Server 2.2+.
+
+[source,javascript]
+----
+async function main() {
+    const _EXAMPLE_JWT = 'eyJhbGbiOiJSUzI1NiIsInR5cCI6IkpXVCJ9.payload.signature'
+    const endpoint = 'https://--your-instance--'
+    const credential = new JwtCredential(_EXAMPLE_JWT)
+    const cluster = createInstance(endpoint, credential)
+----
+
+
+= Certificate Authority
+
+To make a TLS connection to an Enterprise Analytics cluster with a root certificate issued by a trusted CA (Certificate Authority), you do not need to add this to your configuration --
+the platform's defaults are automatically trusted.
+
+The cluster's root certificate just needs to be issued by a CA whose certificate is in your system trust store.
+This includes well known CAs (including GoDaddy and Verisign), plus any other CA certificates that you wish to add.
+
+
+
+=== Certificate Authentication
+
+Certificate authentication is supported with Operational Insights Server 2.2+.
+A conceptual and architectural overview of Operational Insights's support of X.509 certificates is provided in the xref:{version-server}@server:learn:security/certificates.adoc[Server certificates docs].
+Practical information on handling certificates can be found in the xref:{version-oi}@enterprise-analytics:manage:manage-security/manage-certificates.adoc[Operational Insights certificates docs].
+
+The Insights SDK authenticates the client during the TLS handshake.
+The SDK reads the certificate and private key from a `PKCS#12` file:
+
+[source,javascript]
+----
+  const clusterConnStr = 'https://--your-instance--'
+  const cert = fs.ReadFileSync('/path/to/client/certificate.pem')
+  const key = fs.ReadFileSync('/path/to/client/key.pem')
+  const credential = new CertificateCredential({
+    cert: cert,
+    key: key
+  })
+
+  const cluster = createInstance(clusterConnStr, credential)
+----
+
+
+
+
+
+
+
+
+
+////
+=== Waiting for Bootstrap Completion
+
+Opening resources is asynchronous.
+That is, the call to `cluster.bucket` or `Cluster.connect` will complete instantly, and opening that resource will continue in the background.
+
+You can force waiting for the resource to be opened with a call to `waitUntilReady`, which is available on both the `Cluster` and `Bucket`.
+Here is an example of using it on the bucket:
+
+[source,scala]
+----
+include::devguide:example$scala/ManagingConnections.scala[tag=wait-until-ready,indent=0]
+----
+
+If not present, then the first Key Value (KV) operation on the bucket will wait for it to be ready.
+Any issues opening that bucket (for instance, if it does not exist), will result in an error being raised from that data operation.
+
+Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- 
+this is xref:project-docs:compatibility.adoc#network-requirements[not recommended in production deployments], but often occurs during development.
+See the <<working-in-the-cloud,Cloud section>> below for some suggestions of settings adjustments.
+////
+
+
+////
+== Alternate Addresses and Custom Ports
+
+If your Couchbase Server cluster is running in a containerized, port mapped, or otherwise NAT'd environment like Docker or Kubernetes, a client running outside that environment may need additional information in order to connect the cluster.
+Both the client and server require special configuration in this case.
+
+On the server side, each server node must be configured to advertise its external address as well as any custom port mapping.
+This is done with the https://docs.couchbase.com/server/6.5/cli/cbcli/couchbase-cli-setting-alternate-address.html[`setting-alternate-address` CLI command] introduced in Couchbase Server 6.5.
+A node configured in this way will advertise two addresses: one for connecting from the same network, and another for connecting from an external network.
+
+On the client side, the externally visible ports must be used when connecting.
+If the external ports are not the default, you can specify custom ports using the overloaded `Cluster.connect()` method that takes a set of `SeedNode` objects instead of a connection string.
+
+[source,scala]
+----
+include::devguide:example$scala/ManagingConnections.scala[tag=seed-nodes,indent=0]
+----
+
+TIP: In a deployment that uses multi-dimensional scaling, a custom KV port is only applicable for nodes running the KV service.
+A custom manager port may be specified regardless of which services are running on the node.
+
+In many cases the client is able to automatically select the correct set of addresses to use when connecting to a cluster that advertises multiple addresses.
+If the detection heuristic fails in your environment, you can override it by setting the `io.networkResolution` client setting to `default` if the client and server are on the same network, or `external` if they're on different networks.
+
+NOTE: Any TLS certificates must be set up at the point where the connections are being made.
+////
+
+
+
+
+
+== Local Development
+
+
+We strongly recommend that the client and server xref:project-docs:compatibility.adoc#network-requirements[are in the same LAN-like environment] (e.g. AWS Region).
+// As this may not always be possible during development, read the guidance on working with xref:ref:client-settings.adoc#commonly-used-options[constrained network environments].
+// More details on connecting your client code to Couchbase Capella can be found xref:cloud:clouds:connect-an-sdk.adoc#connecting-your-sdk-to-capella[in the Capella Operational docs].

@@ -1,0 +1,59 @@
+= Full Installation
+:description: Installation instructions for the {name-sdk}.
+:page-partial:
+
+
+[abstract]
+{description}
+
+
+
+== Before You Start
+
+Set up an xref:operational-insights:intro:intro.adoc[Operational Insights] cluster.
+
+
+=== Prerequisites
+
+The Analytics Node.js SDK supports LTS versions of Node.js --
+these are 26, 24, and 22 at the time of the 1.1.0 release (October 2026).
+See the xref:project-docs:compatibility.adoc#platform-compatibility[compatibility page] for more information about platform support.
+
+We recommend using the most recent long-term support (LTS) version of Node.js -- 
+at the time of the {sdk_dot_minor} {name-sdk} (October 2026) this is version 26.
+
+
+== Getting the SDK
+
+
+The SDK can be installed via `npm`:
+
+[source,console]
+----
+npm install couchbase-analytics
+----
+
+
+== Other Installation Methods
+
+A select set of packages with prebuilt binaries are available on the https://github.com/couchbase/operational-insights-nodejs-client/releases[GitHub Releases page].
+If a packages is not available for your specific platform,
+See the https://github.com/couchbase/operational-insights-nodejs-client/blob/main/BUILDING.md[GitHub Building page] for details on how to build the SDK's binary.
+
+=== Installing from a Downloaded Package
+
+To install the SDK from a package on the https://github.com/couchbase/operational-insights-nodejs-client/releases[GitHub Releases page]:
+
+. Download the appropriate package
+. Unzip the downloaded file
+. Install via npm: `npm install <path to unzipped file>`
+
+
+=== Building from Source
+
+If a compatible package is not available, the SDK's binary will need to be built from source:
+
+* Follow the steps on the https://github.com/couchbase/operational-insights-nodejs-client/blob/main/BUILDING.md[GitHub Building page].
+* After the build succeeds, the SDK can be used by running Node scripts from within the cloned repository -- 
+or the SDK can be installed via `npm`: `npm install <path to cloned repository>`.
+
