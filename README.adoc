@@ -18,6 +18,7 @@ At a minimum, to build the docs locally, you will need this repo,
 https://github.com/couchbase/docs-sdk-common[docs-sdk-common],
 and the https://github.com/couchbase/docs-server[Server Docs repo]
 in your Antora playbook.
+The [Operational Insights Enterprise repo] will also be needed for most practical purposes.
 
 If you are not sure the best way to update the docs, please raise a JIRA ticket with your suggestion, putting in as much information as possible.
 
