@@ -6,7 +6,7 @@
 {description}
 
 
-include::analytics-sdk:shared:partial$start-using-sdk.adoc[tag=intro]
+include::{version-common}@operational-insights-sdk:shared:partial$start-using-sdk.adoc[tag=intro]
 
 
 == Before You Start
@@ -99,7 +99,7 @@ include::devguide:example$node/src/server_async.ts[indent=0,tag=server-async]
 === Connection String
 
 The `clusterConnStr` in the above example should takes the form of "https://<your_hostname>:" + PORT.
-include::{version-common}@analytics-sdk:shared:partial$connstr.adoc[tag=connstr]
+include::{version-common}@operational-insights-sdk:shared:partial$connstr.adoc[tag=connstr]
 
 
 
