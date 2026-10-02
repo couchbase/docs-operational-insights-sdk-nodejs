@@ -73,7 +73,7 @@ include::devguide:example$node/src/startusing_esmodules.js[indent=0,tag=esmodule
 
 
 
-[[#server-asynchronous-api]]
+[[server-asynchronous-api]]
 === {async-server-api-feature-name}
 
 Operational Insights 2.2 introduced a {async-server-api-feature-name}.
