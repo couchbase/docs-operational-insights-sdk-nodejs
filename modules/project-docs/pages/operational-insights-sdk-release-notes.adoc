@@ -44,3 +44,12 @@ https://docs.couchbase.com/sdk-api/operational-insights-nodejs-client-1.0.0[API 
 * https://jira.issues.couchbase.com/browse/JSCO-36[JSCO-36]: Logging hooks are not yet implemented.
 ////
 // end::all[]
+
+
+
+
+
+
+== Previous SDKs
+
+See the xref:nodejs-analytics-sdk:project-docs:analytics-sdk-release-notes.adoc[Analytics SDK release notes] for earlier developments.
