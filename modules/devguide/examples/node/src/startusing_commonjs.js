@@ -1,5 +1,5 @@
 // #tag::commonjs[]
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 
 async function main() {
     // Update this to your cluster
@@ -8,8 +8,8 @@ async function main() {
     const password = 'Password123!'
     // User Input ends here.
 
-    const credential = new analytics.Credential(username, password)
-    const cluster = analytics.createInstance(clusterConnStr, credential)
+    const credential = new operationalInsights.Credential(username, password)
+    const cluster = operationalInsights.createInstance(clusterConnStr, credential)
 
     // Execute a streaming query with positional arguments.
     let qs = 'SELECT * FROM `travel-sample`.inventory.airline LIMIT 10;'

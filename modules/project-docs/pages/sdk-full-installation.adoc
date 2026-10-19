@@ -15,7 +15,7 @@ Set up an xref:operational-insights:intro:intro.adoc[Operational Insights] clust
 
 === Prerequisites
 
-The Analytics Node.js SDK supports LTS versions of Node.js --
+The Operational Insights Node.js SDK supports LTS versions of Node.js --
 these are 26, 24, and 22 at the time of the 1.1.0 release (October 2026).
 See the xref:project-docs:compatibility.adoc#platform-compatibility[compatibility page] for more information about platform support.
 
@@ -30,7 +30,7 @@ The SDK can be installed via `npm`:
 
 [source,console]
 ----
-npm install couchbase-analytics
+npm install couchbase-operational-insights
 ----
 
 

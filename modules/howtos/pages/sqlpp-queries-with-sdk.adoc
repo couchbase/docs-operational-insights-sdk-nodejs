@@ -80,7 +80,7 @@ include::{example-source}[indent=0,tag=sqlpp_named_parameters_query]
 
 
 
-[[#server-asynchronous-api]]
+[[server-asynchronous-api]]
 == {async-server-api-feature-name}
 
 In the 2.2 release, the Operational Insights Server added an asynchronous request API.
@@ -144,6 +144,6 @@ raw?: {
 == Further Information
 
 The xref:analytics:sqlpp:1_intro.adoc[{sqlpp} for Analytics Reference]]
-offers a complete guide to the {sqlpp} language for both of our analytics services, including all of the latest additions.
+offers a complete guide to the {sqlpp} language for both of our analytics (Operational Insights) services, including all of the latest additions.
 
 

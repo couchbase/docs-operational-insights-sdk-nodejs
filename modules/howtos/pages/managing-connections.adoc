@@ -28,7 +28,7 @@ Connect to Operational Insights by calling `analytics.createInstance` with the c
 
 [source,javascript]
 ----
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 
 async function main() {
     // Update this to your cluster
@@ -37,8 +37,8 @@ async function main() {
     const password = 'Password123!'
     // User Input ends here.
 
-    const credential = new analytics.Credential(username, password)
-    const cluster = analytics.createInstance(clusterConnStr, credential)
+    const credential = new operationalInsights.Credential(username, password)
+    const cluster = operationalInsights.createInstance(clusterConnStr, credential)
 
 ----
 
@@ -79,7 +79,7 @@ async function main() {
 
 = Certificate Authority
 
-To make a TLS connection to an Enterprise Analytics cluster with a root certificate issued by a trusted CA (Certificate Authority), you do not need to add this to your configuration --
+To make a TLS connection to an Operational Insights Enterprise cluster with a root certificate issued by a trusted CA (Certificate Authority), you do not need to add this to your configuration --
 the platform's defaults are automatically trusted.
 
 The cluster's root certificate just needs to be issued by a CA whose certificate is in your system trust store.

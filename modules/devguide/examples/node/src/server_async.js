@@ -16,7 +16,7 @@
  */
 
 // tag::server-async[]
-const analytics = require('couchbase-analytics')
+const operationalInsights = require('couchbase-operational-insights')
 
 async function waitForQueryResults(handle, delayMs = 2500, timeoutMs = 120000) {
   const deadline = Date.now() + timeoutMs
@@ -58,8 +58,8 @@ async function main() {
   const password = 'password'
   // User Input ends here.
 
-  const credential = new analytics.Credential(username, password)
-  const cluster = analytics.createInstance(clusterConnStr, credential)
+  const credential = new operationalInsights.Credential(username, password)
+  const cluster = operationalInsights.createInstance(clusterConnStr, credential)
   const statement = 'SELECT VALUE SLEEP("x", 100) FROM RANGE(1, 100) AS id;'
   const handle = await cluster.startQuery(statement)
 

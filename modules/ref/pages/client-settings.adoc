@@ -11,7 +11,7 @@ Settings are changed by adding them to the connection string, as in the followin
 
 .Connection string with two parameters
 ----
-https://analytics.example.com?timeout.connect_timeout=75s&timeout.query_timeout=100s
+https://insights.example.com?timeout.connect_timeout=75s&timeout.query_timeout=100s
 ----
 
 // TODO add complete listings

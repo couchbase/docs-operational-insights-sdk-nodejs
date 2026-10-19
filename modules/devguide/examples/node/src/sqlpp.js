@@ -1,4 +1,4 @@
-import { Credential, createInstance } from "couchbase-analytics"
+import { Credential, createInstance } from "couchbase-operational-insights"
 
 async function main() {
     const clusterConnStr = 'https://--your-instance--'

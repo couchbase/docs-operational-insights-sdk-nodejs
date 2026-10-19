@@ -20,7 +20,7 @@ See the xref:project-docs:sdk-full-installation.adoc[Full Installation] guide fo
 
 
 [#latest-release]
-== Node.js Analytics SDK 1.0 Releases
+== Node.js Operational Insights SDK 1.0 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
@@ -31,10 +31,9 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 [[v1.0.0]]
-=== Version 1.0.0 (?? October 2026)
+=== Version 1.0.0 (15 October 2026)
 
 This is the first General Availability (GA) release of the new Operational Insights Node.js SDK.
-It supports executing queries against Operational Insights clusters, with additional features planned for future releases.
 
 https://docs.couchbase.com/sdk-api/operational-insights-nodejs-client-1.0.0[API Reference^]
 

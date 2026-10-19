@@ -1,5 +1,5 @@
 // #tag::esmodules[]
-import { Credential, createInstance } from "couchbase-analytics"
+import { Credential, createInstance } from "couchbase-operational-insights"
 
 async function main() {
     // Update this to your cluster
@@ -7,6 +7,7 @@ async function main() {
     const username = 'username'
     const password = 'Password123!'
     // User Input ends here.
+
 
     const credential = new Credential(username, password)
     const cluster = createInstance(clusterConnStr, credential)

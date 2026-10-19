@@ -1,6 +1,6 @@
 = {name-sdk} Quickstart Guide
 :page-toclevels: 3
-:description: Install, connect, try. A quick start guide to get you up and running with Operational Insights Analytics and the {name-sdk}.
+:description: Install, connect, try. A quick start guide to get you up and running with Operational Insights and the {name-sdk}.
 
 [abstract]
 {description}
@@ -38,7 +38,7 @@ The SDK can be installed via `npm`:
 
 [source,console]
 ----
-npm install couchbase-analytics
+npm install couchbase-operational-insights
 ----
 
 For other installation methods, see the xref:project-docs:sdk-full-installation.adoc[installation page].
