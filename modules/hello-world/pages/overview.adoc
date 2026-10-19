@@ -81,7 +81,7 @@ Useful resources to help support your development experience with Couchbase and 
 
 [.column]
 .Reference
-* https://docs.couchbase.com/sdk-api/analytics-node-client/index.html[API Reference]
+* {sdk-api-link}[API Reference]
 * xref:ref:client-settings.adoc[]
 * xref:ref:error-codes.adoc[]
 * xref:ref:glossary.adoc[Glossary]
